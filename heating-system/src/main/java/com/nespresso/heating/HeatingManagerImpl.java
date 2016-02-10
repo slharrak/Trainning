@@ -1,42 +1,24 @@
 package com.nespresso.heating;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import com.nespresso.model.Heating;
+import com.nespresso.utils.Writer;
 
 public class HeatingManagerImpl {
-	
-	public void manageHeating(String t, String threshold, boolean active) {
-		double dT = new Double(t);
-		double dThreshold = new Double(threshold);
-		if (dT < dThreshold && active) {
-			try {
-				Socket socket = new Socket("heater.home", 9999);
-				OutputStream os = socket.getOutputStream();
-				os.write("on".getBytes());
-				os.flush();
-				os.close();
-				socket.close();
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else if (dT > dThreshold && active) {
-			try {
-				Socket socket = new Socket("heater.home", 9999);
-				OutputStream os = socket.getOutputStream();
-				os.write("off".getBytes());
-				os.flush();
-				os.close();
-				socket.close();
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+
+	private static final String STATUS_ON = "on";
+	private static final String STATUS_OFF = "off";
+
+	public void manageHeating(final Heating heating) {
+		if (isTemperatureLessThreshold(heating))
+			write(STATUS_ON);
+		write(STATUS_OFF);
 	}
 
+	private boolean isTemperatureLessThreshold(final Heating heating) {
+		return heating.verifyIfTemperatureLessThreshold();
+	}
+
+	private void write(final String STATUS) {
+		Writer.createSocketAndPrintOnOutputStream(STATUS);
+	}
 }

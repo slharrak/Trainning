@@ -6,6 +6,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 
+import com.nespresso.model.Heating;
+
 /**
  * The system obtains temperature data from a remote source,
  * compares it with a given threshold and controls a remote heating
@@ -18,13 +20,23 @@ import java.util.Calendar;
 public class ScheduleManager {
 	
 	public static void manage(HeatingManagerImpl hM, String threshold) throws Exception {
-		String t = stringFromURL("http://probe.home:9990/temp", 4);
+		Heating heating ;
 		if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) > startHour() && Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < endHour()) {
-			hM.manageHeating(t, threshold, true);
+			heating = new Heating(getCurrentTemperature(), getCurrentThreshold(threshold), true);
+			hM.manageHeating(heating);
 		} 
 		if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < startHour() || Calendar.getInstance().get(Calendar.HOUR_OF_DAY) > endHour()) {
-			hM.manageHeating(t, threshold, false);
+			heating = new Heating(getCurrentTemperature(), getCurrentThreshold(threshold), true);
+			hM.manageHeating(heating);
 		}
+	}
+
+	private static Double getCurrentThreshold(String threshold) {
+		return Double.parseDouble(threshold);
+	}
+
+	private static Double getCurrentTemperature() throws MalformedURLException, IOException {
+		return Double.parseDouble(stringFromURL("http://probe.home:9990/temp", 4));
 	}
 
 	private static int endHour() throws NumberFormatException, MalformedURLException, IOException {
