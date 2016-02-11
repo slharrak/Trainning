@@ -1,24 +1,27 @@
-package com.nespresso.heating;
+package com.nespresso.heating.impl;
 
-import com.nespresso.model.Heating;
-import com.nespresso.utils.Writer;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
-public class HeatingManagerImpl {
+import com.nespresso.business.Heating;
+import com.nespresso.heating.HeatingSystem;
+import com.nespresso.writer.StateWriter;
+
+public abstract class HeatingSystemImpl implements HeatingSystem{
 
 	private static final String STATUS_ON = "on";
 	private static final String STATUS_OFF = "off";
 
-	public void manageHeating(final Heating heating) {
-		if (isTemperatureLessThreshold(heating))
+	@Override
+	public void checkWhitWriteStatus(final Heating heating) {
+		if (heating.verifyIfTemperatureLessThreshold())
 			write(STATUS_ON);
 		write(STATUS_OFF);
 	}
 
-	private boolean isTemperatureLessThreshold(final Heating heating) {
-		return heating.verifyIfTemperatureLessThreshold();
-	}
-
 	private void write(final String STATUS) {
-		Writer.createSocketAndPrintOnOutputStream(STATUS);
+		StateWriter.createSocketWithPrintOnOutputStream(STATUS);
 	}
+	
+	public abstract void scheduleHealting() throws NumberFormatException, MalformedURLException, IOException; 
 }

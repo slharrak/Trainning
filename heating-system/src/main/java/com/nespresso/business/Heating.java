@@ -1,21 +1,17 @@
-package com.nespresso.model;
+package com.nespresso.business;
 
 public class Heating {
 
 	private Double temperature;
 	private Double threshold;
-	private boolean active;
 
-	public Heating(Double temperature, Double threshold, boolean active) {
+	public Heating(Double temperature, Double threshold) {
 		this.temperature = temperature;
 		this.threshold = threshold;
-		this.active = active;
 	}
 
 	public boolean verifyIfTemperatureLessThreshold() {
-		if (this.temperature < this.threshold && this.active)
-			return true;
-		return false;
+		return (temperature < threshold) ? true : false;
 	}
 
 }

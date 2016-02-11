@@ -1,11 +1,11 @@
-package com.nespresso.utils;
+package com.nespresso.writer;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public final class Writer {
+public final class StateWriter {
 
 	private final static String HEATER_HOME = "heater.home";
 	private final static Integer PORT_NUMBER = 9999;
@@ -13,7 +13,7 @@ public final class Writer {
 	private static Socket socket; 
 	private static OutputStream outputStream; 
 	
-	public static void createSocketAndPrintOnOutputStream(final String STATUS){
+	public static void createSocketWithPrintOnOutputStream(final String STATUS){
 			try {
 				createSocket();
 				printOnOutputStreamAndCloseSocket(STATUS);
