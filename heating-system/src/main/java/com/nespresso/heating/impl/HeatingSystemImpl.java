@@ -13,15 +13,15 @@ public abstract class HeatingSystemImpl implements HeatingSystem{
 	private static final String STATUS_OFF = "off";
 
 	@Override
-	public void checkWhitWriteStatus(final Heating heating) {
+	public void checkWhitWriteStatus(final Heating heating) throws IOException {
 		if (heating.verifyIfTemperatureLessThreshold())
 			write(STATUS_ON);
 		write(STATUS_OFF);
 	}
 
-	private void write(final String STATUS) {
+	private void write(final String STATUS) throws IOException {
 		StateWriter.createSocketWithPrintOnOutputStream(STATUS);
 	}
 	
-	public abstract void scheduleHealting() throws NumberFormatException, MalformedURLException, IOException; 
+	public abstract void scheduleHealting() throws MalformedURLException, IOException; 
 }

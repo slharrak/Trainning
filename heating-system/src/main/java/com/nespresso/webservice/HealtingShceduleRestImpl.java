@@ -2,42 +2,34 @@ package com.nespresso.webservice;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class HealtingShceduleRestImpl implements HealtingShceduleRest{
 	
-	public int size;
+	public int max;
 	private String url;
 	
-	public HealtingShceduleRestImpl(String url, int size) {
-		this.size = size;
+	public HealtingShceduleRestImpl(final String url, final int size) {
+		this.max = size;
 		this.url = url;
 	}
 
 	@Override
-	public String readTemperature() {
-		String temperature = "";
-		try {
-			URL currentUrl = new URL(url);
-			InputStream inputStream = currentUrl.openStream();
-			temperature = String.valueOf(readFrom(inputStream));
-			close(inputStream);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return temperature;
+	public String readTemperature() throws  IOException {
+		final InputStream inputStream = openFromUrl();
+		return String.valueOf(readWhitClosing(inputStream));
 	}
 
-	private byte[] readFrom(final InputStream inputStream) throws IOException {
-		byte[] tempBuffer = new byte[size];
-		inputStream.read(tempBuffer);
-		return tempBuffer;
+	private InputStream openFromUrl() throws IOException {
+		final URL currentUrl = new URL(url);
+		return currentUrl.openStream();
 	}
 
-	private void close(final InputStream inputStream) throws IOException {
+	private byte[] readWhitClosing(final InputStream inputStream) throws IOException {
+		byte[] temperatures = new byte[max];
+		inputStream.read(temperatures);
 		inputStream.close();
+		return temperatures;
 	}
+
 }

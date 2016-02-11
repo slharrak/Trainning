@@ -1,8 +1,8 @@
 package com.nespresso.webservice;
 
-import com.nespresso.exception.HealtingException;
+import java.io.IOException;
 
 public interface HealtingShceduleRest {
 
-	String readTemperature() throws HealtingException;
+	String readTemperature() throws  IOException;
 }
