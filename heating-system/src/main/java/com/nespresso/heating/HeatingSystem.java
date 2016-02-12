@@ -1,7 +1,6 @@
-package com.nespresso.heatingSystem;
+package com.nespresso.heating;
 
 import com.nespresso.facade.Writer;
-import com.nespresso.heating.Thermostat;
 import com.nespresso.provider.TemperatureProvider;
 
 public class HeatingSystem {

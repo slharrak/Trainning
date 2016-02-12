@@ -2,8 +2,8 @@ package com.nespresso.facade;
 
 import java.net.Socket;
 
+import com.nespresso.heating.HeatingSystem;
 import com.nespresso.heating.Timer;
-import com.nespresso.heatingSystem.HeatingSystem;
 import com.nespresso.provider.SocketCreator;
 import com.nespresso.provider.TimerProvider;
 

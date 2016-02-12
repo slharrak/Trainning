@@ -1,7 +1,5 @@
 package com.nespresso.heating;
 
-import com.nespresso.heatingSystem.HeatingSystemState;
-
 public class Thermostat {
 
 	private Double threshold;

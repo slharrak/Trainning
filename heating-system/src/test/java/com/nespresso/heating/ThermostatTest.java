@@ -6,8 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
-import com.nespresso.heatingSystem.HeatingSystemState;
-
 public class ThermostatTest {
 
 	Thermostat thermostat;

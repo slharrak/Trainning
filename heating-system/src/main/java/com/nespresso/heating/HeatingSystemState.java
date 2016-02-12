@@ -1,4 +1,4 @@
-package com.nespresso.heatingSystem;
+package com.nespresso.heating;
 
 import com.nespresso.facade.Writer;
 
